@@ -4,3 +4,10 @@ autopep8
 
 # App
 flask
+
+flask
+gunicorn
+joblib
+scikit-learn
+pandas
+numpy
