@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIRTUAL PHARMACY</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>VIRTUAL PHARMACY</h1>
+        <p class="har">Enter your symptoms or disease, and get the best tablet recommendation.</p>
+        
+        <form id="predict-form">
+            <input type="text" name="disease" id="disease" placeholder="Enter disease or symptoms..." required>
+            <button type="submit">Get Tablet</button>
+        </form>
+
+        <div id="result-card" class="hidden">
+            <h2>Recommended Tablet: <span id="tablet-name"></span></h2>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("predict-form").onsubmit = async function(event) {
+            event.preventDefault();
+            let formData = new FormData(this);
+            
+            let response = await fetch("/predict", { method: "POST", body: formData });
+            let result = await response.json();
+            
+            document.getElementById("tablet-name").innerText = result.tablet;
+            document.getElementById("result-card").classList.remove("hidden");
+        };
+    </script>
+</body>
+</html>
